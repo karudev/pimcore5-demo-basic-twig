@@ -1,0 +1,37 @@
+version: '3'
+services:
+  web:
+      container_name: pimcore-demo-twig.local-web
+      build: ./docker/php-apache
+      links:
+        - db
+      depends_on:
+        - db
+      ports:
+        - 82:80
+      volumes:
+        - ./:/var/www/html
+        - ./docker/php-apache/logs:/var/log/apache2
+        - ./docker/php-apache/vhosts/vhosts.conf:/etc/apache2/sites-enabled/000-default.conf
+      extra_hosts:
+        - 'pimcore-demo-twig.local:192.168.33.10'
+  db:
+      build: ./docker/mysql
+      container_name: pimcore-demo-twig.local-mysql
+      ports:
+        - 3308:3306
+      environment:
+        MYSQL_DATABASE: pimcore
+        MYSQL_ROOT_PASSWORD: XXXX
+      volumes:
+        - ./docker/mysql/db:/var/lib/mysql
+      command: mysqld --sql_mode=""
+  
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: pimcore-demo-twig.local-phpmyadmin
+      environment:
+        - PMA_ARBITRARY=1
+      restart: always
+      ports:
+        - 8082:80

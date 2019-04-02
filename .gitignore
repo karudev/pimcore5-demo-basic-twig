@@ -35,7 +35,7 @@
 /var/config/reports.php
 
 
-#/web/var/
+/web/var/
 /web/sitemap*.xml
 
 # PHP-CS-Fixer
@@ -55,11 +55,12 @@
 # NetBeans
 nbproject
 
-# Core / bundle development
-/dev/
-
 # keep legacy paths ignored for easier migration
 /plugins/
 /tools/
 /website/
 .temp
+
+# docker
+/docker/mysql/db
+/docker/php-apache/logs
